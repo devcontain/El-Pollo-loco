@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en" translate="no">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE-edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>El pollo loco</title>
+    <link rel="preload" href="fonts/Caveat/Caveat-VariableFont_wght.ttf" as="font" type="font/ttf"
+        crossorigin="anonymous">
+    <link rel="preload" href="fonts/Madfont-Thorns/MADFB___.TTF" as="font" type="font/ttf" crossorigin="anonymous">
+    <link rel="icon" type="image/x-icon" href="img/1_editables/favicon.png">
+
+    <script src="models/drawable-object.class.js"></script>
+    <script src="models/movable-object.class.js"></script>
+    <script src="models/show.status-bar.class.js"></script>
+    <script src="models/show.status-bar-coin.class.js"></script>
+    <script src="models/show.status-bar-salsa.class.js"></script>
+    <script src="models/show.status-bar-chickenboss.class.js"></script>
+    <script src="models/character.class.js"></script>
+    <script src="models/enemie.chicken.class.js"></script>
+    <script src="models/enemie.chicken-smart.class.js"></script>
+    <script src="models/collect.salasa.class.js"></script>
+    <script src="models/collect.coins.class.js"></script>
+    <script src="models/show.cloud.class.js"></script>
+    <script src="models/show.cloud-second.class.js"></script>
+    <script src="models/world.class.js"></script>
+    <script src="models/background-object.class.js"></script>
+    <script src="models/keyboard.class.js"></script>
+    <script src="models/level.class.js"></script>
+    <script src="models/throwable-object.class.js"></script>
+    <script src="models/enemie.endboss.class.js"></script>
+    <script src="levels/level1.js"></script>
+    <script src="js/game.js"></script>
+    <script src="js/html.js"></script>
+    <script src="js/script.js"></script>
+    <link rel="stylesheet" href="style.css">
+
+</head>
+
+<body id="body" onload="setScreens()">
+
+    <section class="overlay" id="fullscreen" onclick="closeMenu()">
+        <canvas id="canvas" width="720" height="480">
+        </canvas>
+        <div class="settings">
+            <div class="menu" id="menue">
+                <div class="place-top-menu d-none" id="place_top_menu" onclick="noCloseContent(event)">
+                    <button onclick="init()" id="start">Start</button>
+                    <button onclick="endThisGame()" id="end">Ende</button>
+                    <button onclick="toggleFullscreen()" id="toggleFullscreen">fullscreen</button>
+                    <button onclick="descript()" id="descript">descript</button>
+                </div>
+                <div class="open-menu" id="menu" onclick="noCloseContent(event)">
+                    <button class="place-reset" onclick="openMenu()">menu</button>
+                    <div class="responsive-imp">
+                        <a class="resp-color" onclick="showDatenschutz()" href="#">Datenschutz</a>
+                        <div class="the-line"></div>
+                        <a class="resp-color" onclick="showImpressum()" href="#">Impressum</a>
+                    </div>
+                    <button onclick="reset()" id="reset">restart</button>
+                </div>
+            </div>
+            <div class="action-buttons" id="action_buttons">
+                <div class="left-side">
+                    <img class="bottle" id="throw_bottle_left" src="img/6_salsa_bottle/2_salsa_bottle_on_ground.png">
+                    <img class="left" id="left" src="img/1_editables/arrow.png">
+                </div>
+                <img class="space" id="space" src="img/1_editables/space.png">
+                <div class="right-side">
+                    <img class="bottle" id="throw_bottle_right" src="img/6_salsa_bottle/1_salsa_bottle_on_ground.png">
+                    <img class="right" id="right" src="img/1_editables/arrow.png">
+                </div>
+            </div>
+            <div class="sound">
+                <img class="sound-off" id="toggleSoundoff" src="img/1_editables/sound off.png">
+                <img class="sound-on" id="toggleSoundon" src="img/1_editables/sound on.png">
+            </div>
+        </div>
+        <img class="start-screen" id="start_screen" src="img/9_intro_outro_screens/start/startscreen_1.png">
+        <img class="end-screen" id="gameover_screen" src="img/9_intro_outro_screens/game_over/game over.png">
+        <section id='show_descript' class="descript-card d-none">
+            <div class="test">
+                <button onclick="descriptBack()">Back</button>
+                <div class="all">
+                    <h1>Pepe Peligrosa, der gefährliche Pepe...</h1>
+                    <p class="txt">...ist nach schwerer Arbeit auf seinem Hof in der Mittagshitze
+                        eingeschlafen, im Fibertraum sind alle Hühner aus ihren Stellen entflohen und verwüsten nun sein
+                        Haus
+                        und Hof. Die gesamten Münzen sind in der Gegend verteilt, selbst vor der Salza haben die Hühner
+                        keinen
+                        halt
+                        gemacht.
+                    </p>
+                    <p class="txt">
+                        Deine Aufgabe ist es, alle Münzen und Salza-Flaschen einzusammeln, die verrückt gewordenen
+                        Hühner
+                        zu bekämpfen und am Ende die Riesen Hänne Gisela zu besiegen. um wieder aufzuwachen.
+                        Springe auf die Hühne um diese zu besiegen oder lass sie ziehen.
+                        Mit den gesammelten Flaschen kannst du Giesela besiegen.
+                    </p>
+                    <div class="line"></div>
+                    <h1>Steuerung</h1>
+                    <div class="p-bottom">
+                        <p class="key">
+                            Links: Pfeiltaste Links
+                        </p>
+                        <p class="key">
+                            Rechts: Pfeiltaste Rechts
+                        </p>
+                        <p class="key">
+                            Springen: Leertaste
+                        </p>
+                        <p class="key">
+                            Salza Flasche werfen: Taste D
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </section>
+
+    <footer id="footer">
+        <div class="left-elements">
+            <a href="https://www.flaticon.com/free-icons/speaker" title="speaker icons">Flaticon</a>
+            <div class="the-line"></div>
+            <a target="_blank" href="https://icons8.com/icon/10389/sombrero"></a><a target="_blank"
+                href="https://icons8.com">Icons8</a>
+            <div class="the-line"></div>
+            <a
+                href="https://pixabay.com/?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=22922">Pixabay</a>
+        </div>
+        <div class="right-elements">
+            <a onclick="showDatenschutz()" href="#">Datenschutz</a>
+            <div class="the-line"></div>
+            <a onclick="showImpressum()" href="#">Impressum</a>
+        </div>
+    </footer>
+
+    <section id='show_field' class="message-card">
+        <h1 class="turn">Please Turn Your Device</h1>
+    </section>
+
+</body>
+
+</html>
