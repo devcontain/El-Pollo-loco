@@ -1,9 +1,15 @@
+* {
+    box-sizing: border-box;
+}
+
 body {
     display: flex;
     flex-direction: column;
+    justify-content: center;
     align-items: center;
-    height: 100vh;
+    min-height: 100dvh;
     margin: 0;
+    padding-bottom: 80px;
     background-image: url("img/5_background/desert-background.jpg");
     background-color: rgb(58, 10, 10);
     background-size: cover;
@@ -11,44 +17,207 @@ body {
     font-family: Caveat;
 }
 
+/* GAME */
+
+.overlay {
+    position: relative;
+    display: block;
+    width: min(100vw, calc((100dvh - 80px) * 1.5));
+    aspect-ratio: 3 / 2;
+    flex-shrink: 0;
+}
+
 canvas {
     display: none;
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
     background-color: black;
 }
 
-header {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
+.settings {
+    position: absolute;
     top: 0;
-    position: sticky;
+    left: 0;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+    color: rgb(255, 152, 0);
+    pointer-events: none;
 }
+
+.settings button,
+.settings a,
+.settings .action-buttons,
+.settings .sound {
+    pointer-events: auto;
+}
+
+img.start-screen,
+img.end-screen {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* FULLSCREEN */
+
+.overlay:fullscreen {
+    width: 100vw;
+    height: 100dvh;
+    aspect-ratio: auto;
+    background-color: black;
+}
+
+.overlay:fullscreen canvas,
+.overlay:fullscreen img.start-screen,
+.overlay:fullscreen img.end-screen,
+.overlay:fullscreen .settings {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    right: auto;
+    bottom: auto;
+    width: min(100vw, 150dvh);
+    height: min(100dvh, 66.6667vw);
+    transform: translate(-50%, -50%);
+}
+
+/* MENU */
+
+.menu {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: flex;
+    width: 100%;
+    height: auto;
+    z-index: 3;
+    pointer-events: none;
+}
+
+.place-top-menu {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    height: 64px;
+    padding: 16px;
+    background-color: rgba(58, 10, 10, 0.459);
+    pointer-events: auto;
+}
+
+.open-menu {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    width: 100%;
+    height: auto;
+    padding: 16px;
+    pointer-events: none;
+}
+
+.open-menu button,
+.open-menu a {
+    pointer-events: auto;
+}
+
+.responsive-imp {
+    display: none;
+    justify-content: center;
+    padding-bottom: 32px;
+}
+
+.place-reset {
+    margin-bottom: 16px;
+}
+
+/* TOUCH CONTROLS */
+
+.action-buttons {
+    display: none;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    justify-content: space-between;
+    align-items: flex-end;
+    width: 100%;
+    height: 50%;
+    z-index: 3;
+    touch-action: none;
+}
+
+.left-side,
+.right-side {
+    display: flex;
+    flex-direction: column;
+    padding-bottom: clamp(0px, 5vh, 50px);
+}
+
+img.left,
+img.right,
+img.space,
+img.bottle {
+    width: clamp(32px, 6vw, 64px);
+    padding: clamp(4px, 1vw, 16px);
+}
+
+img.left {
+    transform: rotate(180deg);
+    opacity: 0.5;
+}
+
+img.right,
+img.space {
+    opacity: 0.5;
+}
+
+/* SOUND */
+
+.sound {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    padding: 16px;
+    z-index: 4;
+}
+
+img.sound-off,
+img.sound-on {
+    width: 32px;
+    height: 32px;
+    cursor: pointer;
+}
+
+/* FOOTER */
 
 footer {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: rgb(58, 10, 10);
-    border-top: 1px solid;
-    border-color: rgb(179, 145, 53);
-    height: 80px;
+    position: fixed;
     left: 0;
     bottom: 0;
     width: 100%;
-    position: fixed;
+    height: 80px;
+    background-color: rgb(58, 10, 10);
+    border-top: 1px solid rgb(179, 145, 53);
+    z-index: 5;
 }
 
 .right-elements {
     display: flex;
-    justify-content: end;
+    justify-content: flex-end;
     align-items: center;
     margin-right: 16px;
 }
 
 .left-elements {
     display: flex;
-    justify-content: end;
+    justify-content: flex-end;
     align-items: center;
     margin-left: 16px;
 }
@@ -67,129 +236,66 @@ a.resp-color {
 }
 
 .the-line {
-    margin-left: 8px;
-    margin-right: 8px;
-    border: 1px solid;
-    border-color: rgb(179, 145, 53);
+    margin: 0 8px;
+    border: 1px solid rgb(179, 145, 53);
     height: 16px;
 }
 
 .line {
-    margin-left: 8px;
-    margin-right: 8px;
-    border: 1px solid;
-    border-color: rgb(179, 145, 53);
+    margin: 0 8px;
+    border: 1px solid rgb(179, 145, 53);
     height: 1px;
     width: 86%;
 }
 
-button.impressum-b {
-    background-color: black;
-    margin-bottom: 16px;
-    margin-top: 16px;
-}
+/* BUTTONS */
 
-.impressum-test {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    height: calc(100dvh - 80px);
-    background-color: rgb(49, 11, 11);
-}
-
-.impressum {
-    display: flex;
-    justify-content: start;
-    align-items: center;
-    flex-direction: column;
-    max-height: 100%;
-    overflow: auto;
-    padding-left: 32px;
-    padding-right: 32px;
-    background-color: rgb(49, 11, 11);
-    color: rgb(179, 145, 53);
-    font-size: 24px;
-    padding-bottom: 100px;
-}
-
-.place-impressum {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-wrap: wrap;
-    background-color: rgb(58, 10, 10);
-}
-
-.impressum-header {
-    padding-right: 32px;
-}
-
-.settings {
-    display: flex;
-    flex-direction: column;
-    align-items: end;
-    flex-wrap: wrap;
-    justify-content: end;
-    position: absolute;
-    width: 720px;
-    height: 480px;
-    background-color: rgba(114, 9, 9, 0);
+button {
+    width: 120px;
+    height: 32px;
+    border: none;
     border-radius: 8px;
-    color: rgb(255, 152, 0);
+    background-color: rgba(58, 10, 10, 0.5);
+    font-family: Caveat;
+    font-size: 20px;
+    color: rgb(177, 134, 16);
+    cursor: pointer;
 }
 
-.overlay {
-    display: flex;
-    align-items: start;
-    justify-content: center;
-    flex-direction: column;
-    height: 100%;
+button:hover {
+    filter: opacity(0.5);
 }
 
-.single-line {
-    display: flex;
-    align-items: center;
-    font-size: 32px;
+/* IMAGES */
+
+img {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
 
-.message-card {
-    display: none;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    background-color: rgba(24, 26, 27, 0.884);
-    z-index: 999;
-    position: fixed;
-    left: 0;
-    right: 0;
-    top: 0;
-    bottom: 0;
-    padding: 32px;
+img.s-i-size {
+    width: 64px;
+    height: 64px;
 }
 
-h1.turn {
-    color: rgb(120, 155, 185);
-    font-size: 64px;
-}
+/* DESCRIPTION */
 
 .descript-card {
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    background-color: rgba(24, 26, 27, 0.918);
-    z-index: 999;
     position: fixed;
-    height: 100vh;
-    width: 100vw;
-    left: 0;
-    right: 0;
-    top: 0;
-    bottom: 0;
+    inset: 0;
+    width: 100%;
+    height: 100dvh;
+    background-color: rgba(24, 26, 27, 0.97);
     color: rgb(255, 152, 0);
     font-size: 24px;
+    z-index: 999;
 }
 
 .test {
@@ -202,7 +308,7 @@ h1.turn {
 
 .all {
     display: flex;
-    justify-content: start;
+    justify-content: flex-start;
     align-items: center;
     flex-direction: column;
     max-height: 100%;
@@ -214,148 +320,6 @@ h1.turn {
 
 .txt {
     padding: 16px;
-}
-
-.menu {
-    display: flex;
-    height: 100%;
-    width: 100%;
-}
-
-.place-top-menu {
-    display: flex;
-    justify-content: space-between;
-    padding: 16px;
-    width: 100%;
-    height: 32px;
-    background-color: rgba(58, 10, 10, 0.459);
-}
-
-.open-menu {
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-    padding: 16px;
-    width: 100%;
-    height: 32px;
-}
-
-.responsive-imp {
-    display: none;
-    justify-content: center;
-    padding-bottom: 32px;
-}
-
-.place-reset {
-    margin-bottom: 16px;
-}
-
-.action-buttons {
-    display: none;
-    justify-content: space-between;
-    align-items: end;
-    height: 50%;
-    width: 100%;
-}
-
-.left-side {
-    display: flex;
-    flex-direction: column;
-    padding-bottom: 132px;
-}
-
-.right-side {
-    display: flex;
-    flex-direction: column;
-    padding-bottom: 132px;
-}
-
-img {
-    -webkit-touch-callout: none;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-}
-
-button {
-    background-color: rgba(58, 10, 10, 0.5);
-    width: 120px;
-    border-radius: 8px;
-    border: none;
-    height: 32px;
-    font-family: Caveat;
-    font-size: 20px;
-    color: rgb(177, 134, 16);
-    cursor: pointer;
-}
-
-button:hover {
-    filter: opacity(0.5);
-}
-
-img.start-screen {
-    width: 720px;
-    height: 480px;
-}
-
-img.end-screen {
-    width: 720px;
-    height: 480px;
-}
-
-.d-none {
-    display: none;
-}
-
-.d-block {
-    display: block;
-}
-
-img.s-i-size {
-    width: 64px;
-    height: 64px;
-}
-
-img.left {
-    width: 64px;
-    transform: rotate(180deg);
-    padding: 16px;
-    opacity: 0.5;
-}
-
-img.right {
-    width: 64px;
-    padding: 16px;
-    opacity: 0.5;
-}
-
-img.space {
-    width: 64px;
-    padding: 16px;
-    opacity: 0.5;
-}
-
-img.bottle {
-    width: 64px;
-    padding: 16px;
-}
-
-.sound {
-    position: absolute;
-    padding: 16px;
-}
-
-img.sound-off {
-    height: 32px;
-    width: 32px;
-    cursor: pointer;
-}
-
-img.sound-on {
-    height: 32px;
-    width: 32px;
-    cursor: pointer;
 }
 
 p.descript {
@@ -370,18 +334,104 @@ p.descript {
 }
 
 .key {
-    padding: 8px;
     margin: 8px;
+    padding: 8px;
     background-color: rgba(165, 42, 42, 0.199);
     border-radius: 8px;
 }
+
+/* IMPRESSUM & DATENSCHUTZ */
+
+.overlay:has(.impressum-test) {
+    width: 100%;
+    height: calc(100dvh - 80px);
+    aspect-ratio: auto;
+}
+
+.impressum-test {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    background-color: rgb(49, 11, 11);
+}
+
+.impressum {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-direction: column;
+    max-height: 100%;
+    overflow: auto;
+    padding: 0 32px 100px;
+    background-color: rgb(49, 11, 11);
+    color: rgb(179, 145, 53);
+    font-size: 24px;
+}
+
+.place-impressum {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    background-color: rgb(58, 10, 10);
+}
+
+.impressum-header {
+    padding-right: 32px;
+}
+
+button.impressum-b {
+    margin-top: 16px;
+    margin-bottom: 16px;
+    background-color: black;
+}
+
+/* SCREEN ROTATION */
+
+.message-card {
+    display: none;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    position: fixed;
+    inset: 0;
+    padding: 32px;
+    background-color: rgba(24, 26, 27, 0.884);
+    z-index: 999;
+}
+
+h1.turn {
+    color: rgb(120, 155, 185);
+    font-size: 64px;
+}
+
+/* HELPERS */
+
+.single-line {
+    display: flex;
+    align-items: center;
+    font-size: 32px;
+}
+
+.d-none {
+    display: none;
+}
+
+.d-block {
+    display: block;
+}
+
+/* SCROLLBAR */
 
 ::-webkit-scrollbar {
     width: 16px;
 }
 
 ::-webkit-scrollbar-track {
-    background-color: rgb(0, 0, 0);
+    background-color: black;
 }
 
 ::-webkit-scrollbar-thumb {
@@ -394,13 +444,94 @@ p.descript {
     background-color: rgb(204, 186, 135);
 }
 
-@media (hover: none) {
-    .action-buttons {
-        display: flex;
+/* RESPONSIVE */
+
+@media (hover: none) and (orientation: landscape) {
+    body {
+        padding-bottom: 36px;
     }
 
-    .menu {
-        height: 50%;
+    footer {
+        height: 36px;
+        font-size: 12px;
+    }
+
+    .overlay {
+        width: min(100vw, calc((100dvh - 36px) * 1.5));
+    }
+
+    .responsive-imp {
+        display: none;
+    }
+
+    .action-buttons {
+        display: flex;
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 8px;
+        width: 100%;
+        height: auto;
+        padding: 0 10px;
+        justify-content: space-between;
+        align-items: flex-end;
+        z-index: 4;
+        pointer-events: none;
+    }
+
+    .left-side,
+    .right-side {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+        padding-bottom: 0;
+        pointer-events: auto;
+    }
+
+    .space {
+        align-self: flex-end;
+        margin-bottom: 0;
+        pointer-events: auto;
+    }
+
+    img.left,
+    img.right,
+    img.space,
+    img.bottle {
+        width: 48px;
+        height: 48px;
+        padding: 4px;
+    }
+
+    img.left,
+    img.right,
+    img.space {
+        opacity: 0.75;
+    }
+
+    .sound {
+        top: 52px;
+        right: 8px;
+        bottom: auto;
+        padding: 4px;
+        z-index: 5;
+    }
+
+    img.sound-off,
+    img.sound-on {
+        width: 28px;
+        height: 28px;
+    }
+
+    .open-menu,
+    .place-top-menu {
+        padding: 6px 10px;
+    }
+
+    button {
+        width: 90px;
+        height: 28px;
+        font-size: 18px;
     }
 }
 
@@ -410,7 +541,7 @@ p.descript {
     }
 
     .test {
-        height: 100vh;
+        height: 100dvh;
     }
 }
 
@@ -422,56 +553,24 @@ p.descript {
     button {
         width: 80px;
     }
-}
 
-@media only screen and (max-width: 980px) {
-    canvas {
-        width: 100%;
-    }
-
-    .overlay {
-        width: 100%;
-    }
-
-    .settings {
-        width: 100%;
-    }
-
-    img.start-screen {
-        width: 100%;
-    }
-
-    img.end-screen {
-        width: 100%;
+    h1.turn {
+        font-size: 32px;
     }
 }
 
-@media only screen and (max-height: 480px) {
-    canvas {
-        height: 100vh;
-    }
-
-    .settings {
-        height: 100vh;
-    }
-
-    .overlay {
-        height: 100vh;
-    }
-}
+/* FONTS */
 
 @font-face {
     font-family: Madfont-Thorns;
-    src: url('fonts/Madfont-Thorns/MADFB___.TTF');
+    src: url("fonts/Madfont-Thorns/MADFB___.TTF");
     font-style: normal;
     font-display: swap;
-    crossorigin: 'anonymous';
 }
 
 @font-face {
     font-family: Caveat;
-    src: url('fonts/Caveat/Caveat-VariableFont_wght.ttf');
+    src: url("fonts/Caveat/Caveat-VariableFont_wght.ttf");
     font-style: normal;
     font-display: swap;
-    crossorigin: 'anonymous';
 }

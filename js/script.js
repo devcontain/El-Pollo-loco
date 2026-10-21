@@ -89,11 +89,9 @@ window.addEventListener("orientationchange", function () {
     if (window.innerHeight > window.innerWidth) {
         oversrceen.style.display = 'none';
         actions.style.display = 'flex';
-        menu.style.height = '50%';
     } else {
         oversrceen.style.display = 'flex';
         actions.style.display = 'none';
-        menu.style.height = '100%';
     }
 });
 
